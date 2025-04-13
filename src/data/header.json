@@ -1,0 +1,50 @@
+{
+    "navLinks": [
+        {
+            "href": "/library",
+            "label": "Library",
+            "ref": ""
+        },
+        {
+            "href": "/workshop",
+            "label": "Workshop",
+            "ref": ""
+        },
+        {
+            "href": "/diary",
+            "label": "Diary",
+            "ref": ""
+        },
+        {
+            "href": "/about",
+            "label": "About",
+            "ref": ""
+        },
+        {
+            "href": "/contact",
+            "label": "Contact",
+            "ref": ""
+        }
+    ],
+    "cardData": {
+        "name": "Ankit Kumar",
+        "title": "Product Manager",
+        "company": "Workforwin Inc.",
+        "email": "ankit@workforwin.com",
+        "phone": "+(91)-8396836615",
+        "website": "workforwin.com",
+        "location": "Gurugram, HR (India)",
+        "avatar": "/assets/images/qr-code.svg",
+        "social": {
+            "linkedin": "https://linkedin.com/in/ankit5999",
+            "twitter": "https://x.com/ankit5999"
+        }
+    },
+    "address": "Gurugram, India",
+    "calander_btn": "Book Calendar",
+    "business_card_btn": "Access Account",
+    "logo": "/assets/images/logo/logo1.svg",
+    "logo_alt": "Workforwin",
+    "calander_link": "https://topmate.io/ankit5999",
+    "signin_link": "/signin"
+}
