@@ -1,40 +1,43 @@
 <!-- 
+  _    _ _                            _____ 
+ | |  | (_)                     /\   |_   _|
+ | |__| |_ _ __ ___  _ __      /  \    | |  
+ |  __  | | '__/ _ \| '_ \    / /\ \   | |  
+ | |  | | | | | (_) | | | |  / ____ \ _| |_ 
+ |_|  |_|_|_|  \___/|_| |_| /_/    \_\_____|                                                                                   
 
-  __          __        _     __                    _       
-  \ \        / /       | |   / _|                  (_)      
-   \ \  /\  / /__  _ __| | _| |_ ___  _ ____      ___ _ __  
-    \ \/  \/ / _ \| '__| |/ /  _/ _ \| '__\ \ /\ / / | '_ \ 
-     \  /\  / (_) | |  |   <| || (_) | |   \ V  V /| | | | |
-      \/  \/ \___/|_|  |_|\_\_| \___/|_|    \_/\_/ |_|_| |_|
- 
 -->
 
-<!-- ![Workforwin Logo](https://res.cloudinary.com/workforwin/image/upload/v1662996166/Workforwin/Workforwin%20Frontend/Home/workforwin_logo_ie1gut.png) -->
+# [<span style="color:#074b34">🎉Hiron AI ~ </span> <span style="color:#F2B45D">*Hiring Made Fast*🎉</span>](#) 
 
-# [<span style="color:#529CF9">🎉Workforwin ~ </span> <span style="color:#F2B45D">*Learn To Code*🎉</span>](#) 
+🌳Connecting talent with opportunities worldwide. Whether you're looking for your next role or your next hire, Hiron AI brings everyone together.
 
-🌳Workforwin is an online learning platform for computer science and engineering students. Here they can learn new technology at any time and can implement the learning into real world projects.
-
-[Company Name:](#) - Workforwin
+[Company Name:](#) - Hiron AI
 [Author:](#) - Ankit Kumar
-[License:](#) - Workforwin License
-[Designed By:](#) - Ankit Kumar
-[Designed In:](#) - India
-[Url:](#) - https://workforwin.com/
+[License:](#) - Hiron AI License
+[Designed By:](#) - Hiron AI
+[Designed In:](#) - United Kingdom
+[Url:](#) - https://hironai.com/
+
 ## ❄️ Technical Documentation
 ###### Frontend:
 - [Next Js - ```Frontend```](#)
 - [Tailwind CSS - ```Styling```](#)
+- [Schedcn UI - ```Library```](#)
 ###### Backend:
 - [Node Js - ```Backend```](#)
 - [Express Js - ```Backend```](#)
 - [Nodemailer - ```Send Email```](#)
 ###### Database:
 - [Mongodb - ```Database```](#)
+- [Redish - ```Cache Database```](#)
+- [RebittMQ - ```Mailing Agent```](#)
 ###### Hosting: 
 - [Cloudinary - ```Image Hosting```](#)
 - [Supabase - ```PDF Hosting```](#)
-- [Firebase - ```Website Hosting```](#)
+- [Digital Ocean - ```Website Hosting```](#)
+- [Firebase - ```Key Store```](#)
+- [Google Analytics - ```Key Store```](#)
 - [Github - ```Code Hosting```](#)
 
 ### ❄️ ENV VAR
@@ -58,16 +61,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.js`. 
 
-<!-- ## ❄️ Create Production Build
+## ❄️ Create Production Build
 ``npm run build && npm run export``
 
-## ❄️ Project Deployement
+<!-- ## ❄️ Project Deployement
 - ```firebase init``` - [*Initialize Project*](#)
-- ```firebase deploy``` - [*Deploye Project*](#)
+- ```firebase deploy``` - [*Deploye Project*](#) -->
 
 
-### **<span style="color:#03989E">Workforwin CEO</span>**
+### **<span style="color:#03989E">Hiron AI</span>**
 
-![Ankit yadav](https://github.com/ankit5999/workforwin-images/blob/main/char2.png?raw=true) 
+<!-- ![Ankit yadav](https://github.com/ankit5999/Hiron AI-images/blob/main/char2.png?raw=true) 
 [Ankit Yadav](#) -->
 

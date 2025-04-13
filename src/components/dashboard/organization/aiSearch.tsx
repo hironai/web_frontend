@@ -116,7 +116,7 @@ export default function AISearch() {
         }
     };
 
-    const handleSaveCandidate = (candidateId: number) => {
+    const handleSaveCandidate = (candidateId: any) => {
         console.log('Saving candidate:', candidateId);
         // Save candidate logic
     };

@@ -1,6 +1,3 @@
-
-
-
 "use client";
 
 import { useContext, useEffect, useState } from 'react';
@@ -8,13 +5,13 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, AlertTriangle, ArrowBigRight, RefreshCw, Trash2, BookmarkPlus } from 'lucide-react';
+import { Search, ArrowBigRight, RefreshCw, BookmarkPlus } from 'lucide-react';
 import { HttpStatusCode } from 'axios';
 import { toast } from "sonner";
 import { useRouter } from 'next/navigation';
 import { getSavedCandidate_API, saveEmployees_API } from '@/app/api/controller/dashboardController';
 import { CandidateCard } from '@/components/layout/employee-card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ApplicationContext } from '@/context/applicationContext';
 import { DeleteActionDialogContent } from '@/components/layout/dialog-content';
 
@@ -22,7 +19,6 @@ import { DeleteActionDialogContent } from '@/components/layout/dialog-content';
 
 export default function ShortlistedEmployees() {
     const {activeTab,setActiveTab} = useContext(ApplicationContext)
-    const [isSearching, setIsSearching] = useState(false);
     const [isOpen, setIsOpen] = useState<any>(null);
     const [searchResults, setSearchResults] = useState({ search: "", submit: "" });
     const route = useRouter();
@@ -81,14 +77,23 @@ export default function ShortlistedEmployees() {
     };
 
     let timeout:any;
-    const handleSearch = async (e: React.FormEvent<HTMLInputElement>) => {
-        clearTimeout(timeout)
-        timeout = setTimeout(() => {
 
-            setSearchResults({ ...searchResults, search: e.target.value });
+    // const handleSearch = async (e: React.FormEvent<HTMLInputElement>) => {
+    //     clearTimeout(timeout)
+    //     timeout = setTimeout(() => {
+
+    //         setSearchResults({ ...searchResults, search: e.target.value });
+    //     }, 600);
+    // };
+
+    const handleSearch = async (e: React.FormEvent<HTMLInputElement>) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            const target = e.target as HTMLInputElement;
+            setSearchResults({ ...searchResults, search: target.value });
         }, 600);
     };
-
+    
 
 
 

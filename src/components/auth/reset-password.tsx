@@ -48,13 +48,11 @@ const route = useRouter()
     }
   });
   
-  const onSubmit = async(data: z.infer<typeof resetPasswordSchema>) => {
+  const onSubmit = async(data: any) => {
     setIsSubmitting(true);
-    console.log("Reset password submitted:", data);
     
     try {
       let response = await setResetPassword_API({ ...data, email});
-      console.log(response, "resp");
 
       // ✅ Ensure status is always a number by using fallback (e.g., 500)
       const status = response.status ?? 500;

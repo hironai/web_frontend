@@ -8,9 +8,11 @@ import { NavContextProvider } from "@/context/navContext";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { InstallPrompt } from "@/components/ui/InstallPrompt";
-import ApplicationContextProvider from "@/context/applicationContext";
 import { Toaster } from 'sonner';
-import { GlobalFeedbackDialog } from "@/components/feedbacks/global-feedback";
+import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleTagManager } from '@next/third-parties/google'
+import ApplicationContextProvider from "@/context/applicationContext";
+import MicrosoftClarity from "./metrics/MicrosoftClarity";
 
 export const metadata: Metadata = {
   title: "Hiron AI",
@@ -74,7 +76,13 @@ export default function Layout({
         <ApplicationContextProvider>
         <NavContextProvider>
           {children}
-          {/* <GlobalFeedbackDialog /> */}
+          <GoogleAnalytics 
+          gaId={`${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} 
+          />
+          <GoogleTagManager 
+          gtmId={`${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID}`} 
+          />
+          <MicrosoftClarity />
           <Toaster />
           <InstallPrompt />
           <Analytics />

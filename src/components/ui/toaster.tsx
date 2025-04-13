@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/toast';
 
 export function Toaster() {
-    const { toasts } = usetoast.info();
+    const { toasts } = useToast();
 
     return (
         <ToastProvider>

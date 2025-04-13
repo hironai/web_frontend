@@ -90,7 +90,7 @@ export default function Invitations() {
       
       const [employees, setEmployees] = useState(sampleEmployees);
       const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-      const { toast } = usetoast.info();
+      const { toast } = useToast();
     
       const handleSelectAll = (checked: boolean) => {
         if (checked) {
@@ -128,7 +128,7 @@ export default function Invitations() {
     
         setSelectedEmployees([]);
         
-        toast.info({
+        toast({
           title: "Invitations Sent",
           description: `Successfully sent invitations to ${selectedEmployeeData.length} employees.`,
         });
@@ -138,10 +138,11 @@ export default function Invitations() {
         // Simulate API call for single employee
         console.log("Resending invite to:", employee);
     
-        toast.info({
+        toast({
           title: "Invitation Resent",
           description: `Successfully resent invitation to ${employee.name}.`,
         });
+        
       };
     
 

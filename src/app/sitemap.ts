@@ -24,5 +24,9 @@ export default function sitemap() {
             url: 'https://hironai.com/terms',
             lastModified: new Date(),
         },
+        {
+            url: 'https://hironai.com/templates',
+            lastModified: new Date(),
+        },
     ]
 }

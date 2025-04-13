@@ -40,7 +40,8 @@ const nextConfig = {
     ],
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV !== "development", // ✅ Moved here
+    removeConsole: true, // ✅ Moved here
+    // removeConsole: process.env.NODE_ENV !== "development", // ✅ Moved here
   },
 };
 
