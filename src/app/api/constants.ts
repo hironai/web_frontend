@@ -1,5 +1,6 @@
 export class HOST_URL {
-  static url = "http://localhost:5000";
+  // static url = "http://localhost:5000";
+  static url = "https://api.hironai.com";
 }
 
 export class BASE_URL {
