@@ -5,8 +5,8 @@ import "@/styles/shadow.css";
 import "@/styles/animation.css";
 import { GoogleFonts } from "@/fonts";
 import { NavContextProvider } from "@/context/navContext";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+// import { Analytics } from "@vercel/analytics/react"
+// import { SpeedInsights } from "@vercel/speed-insights/next"
 import { InstallPrompt } from "@/components/ui/InstallPrompt";
 import { Toaster } from 'sonner';
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -85,8 +85,8 @@ export default function Layout({
           <MicrosoftClarity />
           <Toaster />
           <InstallPrompt />
-          <Analytics />
-          <SpeedInsights />
+          {/* <Analytics />
+          <SpeedInsights /> */}
         </NavContextProvider>
         </ApplicationContextProvider>
       </body>

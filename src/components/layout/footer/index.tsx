@@ -66,11 +66,11 @@ export function Footer() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <Phone size={18} className="text-gray-400" />
-                                <FooterLink href="tel:+621987654321">+621 987 654 321</FooterLink>
+                                <FooterLink href="tel:+447584470579">(+44) 7584 470579</FooterLink>
                             </div>
                             <div className="flex items-center gap-2">
                                 <MapIcon size={18} className="text-gray-400 min-h-5 min-w-5" />
-                                <FooterLink href="">123 Innovation Drive, San Francisco, CA 94105, USA</FooterLink>
+                                <FooterLink href="">Buckingham Palace Road, London SW1W 9SR, UK</FooterLink>
                             </div>
                         </div>
                     </motion.div>

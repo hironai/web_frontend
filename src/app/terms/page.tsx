@@ -153,8 +153,8 @@ export default function TermsPage() {
                                 </p>
                                 <ul className="list-disc list-inside space-y-2">
                                     <li>Email: legal@hironai.com</li>
-                                    <li>Phone: +1 (555) 123-4567</li>
-                                    <li>Address: 123 Innovation Drive, San Francisco, CA 94105</li>
+                                    <li>Phone: (+44) 7584 470579</li>
+                                    <li>Address: Buckingham Palace Road, London SW1W 9SR, United Kingdom</li>
                                 </ul>
                             </CardContent>
                         </Card>

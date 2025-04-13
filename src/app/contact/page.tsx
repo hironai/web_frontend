@@ -204,7 +204,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h3 className="font-medium">Phone</h3>
-                                            <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                                            <p className="text-muted-foreground">(+44) 7584 470579</p>
                                             <p className="text-muted-foreground">Monday - Friday, 9am - 5pm EST</p>
                                         </div>
                                     </div>
@@ -215,8 +215,8 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h3 className="font-medium">Office</h3>
-                                            <p className="text-muted-foreground">123 Innovation Drive</p>
-                                            <p className="text-muted-foreground">San Francisco, CA 94105, USA</p>
+                                            <p className="text-muted-foreground">Buckingham Palace Road,</p>
+                                            <p className="text-muted-foreground">London SW1W 9SR, United Kingdom</p>
                                         </div>
                                     </div>
                                 </CardContent>

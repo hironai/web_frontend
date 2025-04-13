@@ -50,12 +50,14 @@ import ShortlistedEmployees from "@/components/dashboard/organization/shortliste
 
 
 const getInitials = (name: string) => {
+    if (!name) return "";
     return name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase();
   };
+  
 
 
 export default function Dashboard() {
@@ -93,6 +95,9 @@ export default function Dashboard() {
                     setIsOrganization(responseData.dashboard.user.role !== "Candidate");
                 }
                 if (status === HttpStatusCode.Unauthorized) {
+                    route.push("/login");
+                }
+                if (status === HttpStatusCode.Forbidden) {
                     route.push("/login");
                 }
             } catch (error) {
@@ -157,7 +162,6 @@ export default function Dashboard() {
     async function handleLogout() {
         try {
             let response = await logoutUser_API();
-            console.log(response, "resp");
 
             // ✅ Ensure status is always a number by using fallback (e.g., 500)
             const status = response.status ?? 500;
@@ -177,9 +181,14 @@ export default function Dashboard() {
         }
 
     }
+      
 
     return (
-        <div className="min-h-screen bg-background">
+        !userInfo || !userInfo.user?.email ? (
+            <Loader />
+        ) :
+        (
+            <div className="min-h-screen bg-background">
             {/* Mobile Header */}
             <header className="lg:hidden sticky top-0 z-30 flex justify-between h-16 items-center gap-4 border-b bg-background px-4">
                 <Logo />
@@ -255,7 +264,7 @@ export default function Dashboard() {
                                     <div className="flex items-center gap-3">
                                         <Avatar className="h-10 w-10 bg-primary/5"> 
                                             <AvatarImage src="/assets/avatars/men/char1.svg" alt="@shadcn" />
-                                            <AvatarFallback> {getInitials(userInfo.user?.name as string)} </AvatarFallback>
+                                            <AvatarFallback> { isUserInfoEmpty ? "" : getInitials(userInfo.user?.name as string)} </AvatarFallback>
                                         </Avatar>
                                         <div>
                                             <p className="font-semibold">{userInfo.user?.name}</p>
@@ -291,5 +300,6 @@ export default function Dashboard() {
                     </div>)
             }
         </div>
+        )
     );
 }
