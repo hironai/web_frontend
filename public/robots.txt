@@ -19,4 +19,4 @@ Allow: /*.jpeg$
 Allow: /*.gif$
 
 # Specify the Sitemap URL to help crawlers find all indexed pages
-Sitemap: https://workforwin.com/sitemap.xml
+Sitemap: https://hironai.com/sitemap.xml
