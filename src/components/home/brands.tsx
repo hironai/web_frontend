@@ -11,7 +11,7 @@ export default function Brands() {
         { name: "Asana", logo: "/assets/images/brands/color/asana.svg" },
         { name: "Meta", logo: "/assets/images/brands/color/meta.svg" },
         { name: "Adobe", logo: "/assets/images/brands/color/adobe.svg" },
-        { name: "Paypal", logo: "/assets/images/brands/color/paypals.svg" },
+        { name: "Paypal", logo: "/assets/images/brands/color/paypal.svg" },
         { name: "Slack", logo: "/assets/images/brands/color/slack.svg" },
         { name: "Gitlab", logo: "/assets/images/brands/color/loom.svg" },
         { name: "Dropbox", logo: "/assets/images/brands/color/airbnb.svg" },
