@@ -23,8 +23,14 @@ export function CandidateCard({
 }: CandidateCardProps) {
   const route = useRouter()
   const getInitials = (name: string) => {
-    return name.split(" ").map((n) => n[0]).join("").toUpperCase();
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
   };
+  
   const { name, email,userName, _id } = candidate?.candidate
   const hasHiddenCompanies = companies.some((company: any) => company);
   const onRemove = () => {

@@ -143,7 +143,11 @@ const {userInfo,setActiveTab} = useContext(ApplicationContext)
                             transition={{ duration: 0.5, delay: 0.1 }}
                             style={{ lineHeight: "1.2" }}
                         >
-                            Your global <span className="highlight relative z-10">HR partner</span> for global Recruitment
+                            Your global <span className="relative z-10">HR partner
+                            {/* <span className="highlight relative z-10"> */}
+                            <span className="absolute bottom-3 left-0 w-full h-2 -z-20 bg-[#dcf979]"></span>
+                            </span> for global Recruitment 
+                            {/* Your global <span className="highlight relative z-10">HR partner</span> for global Recruitment  */}
                         </motion.h1>
 
 

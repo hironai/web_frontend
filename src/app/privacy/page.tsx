@@ -167,7 +167,7 @@ export default function PrivacyPage() {
                                 <ul className="list-disc list-inside space-y-2">
                                     <li>Email: privacy@hironai.com</li>
                                     <li>Phone: +1 (555) 123-4567</li>
-                                    <li>Address: 123 Innovation Drive, San Francisco, CA 94105</li>
+                                    <li>Address: Buckingham Palace Road, London SW1W 9SR, United Kingdom</li>
                                 </ul>
                             </CardContent>
                         </Card>
