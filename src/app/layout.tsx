@@ -13,6 +13,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import ApplicationContextProvider from "@/context/applicationContext";
 import MicrosoftClarity from "./metrics/MicrosoftClarity";
+import { AdBlockerDialog } from "@/components/layout/dialog/ad-blocker-dialog";
 
 export const metadata: Metadata = {
   title: "Hiron AI",
@@ -85,8 +86,7 @@ export default function Layout({
           <MicrosoftClarity />
           <Toaster />
           <InstallPrompt />
-          {/* <Analytics />
-          <SpeedInsights /> */}
+          {/* <AdBlockerDialog /> */}
         </NavContextProvider>
         </ApplicationContextProvider>
       </body>

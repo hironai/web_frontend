@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { saveEmployees_API } from '@/app/api/controller/dashboardController';
 
 export default function searchCandidates() {
-    const { userInfo, setUserInfo } = useContext(ApplicationContext) || {};
+    const { userInfo, setUserInfo, setReloadDashboardData } = useContext(ApplicationContext) || {};
     const [searchQuery, setSearchQuery] = useState('');
     const [showFilters, setShowFilters] = useState(false);
     const [experience, setExperience] = useState(0);
@@ -61,6 +61,9 @@ export default function searchCandidates() {
             const status = response.status ?? 500;
             const responseData = response.data ?? {};
 
+            console.log(responseData, "search result");
+            
+
             if (status !== HttpStatusCode.Ok) {
                 setSearchResults([]);
                 setUserInfo({
@@ -73,6 +76,7 @@ export default function searchCandidates() {
             if (status === HttpStatusCode.Ok) {
                 setSearchResults(responseData.results);
                 setPagination(responseData.pagination);
+                setReloadDashboardData(true)
                 setUserInfo({
                     ...userInfo,
                     remainingFreeSearches: responseData.remainingFreeSearches || 0,

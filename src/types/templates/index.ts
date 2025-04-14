@@ -52,4 +52,5 @@ export interface UserData {
         duration: string;
         technologies: any[];
     }[];
+    isPorfileCompleted: boolean
 }

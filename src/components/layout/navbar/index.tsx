@@ -33,7 +33,8 @@ export function Navbar() {
                   setUserInfo(responseData.dashboard);
     
                   // ✅ Update `isOrganization` based on user role
-                  setIsOrganization(responseData.dashboard.user.role !== "Candidate");
+                  setIsOrganization(responseData.dashboard.user.role === "Organization");
+
               }
               
           } catch (error) {

@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Briefcase, Building2, Clock, Save, CheckCircle2, Plus, X } from 'lucide-react';
 import { ApplicationContext } from '@/context/applicationContext';
-import { getLastActiveStatus } from '@/lib/utils';
 import { updateCandidate_API } from '@/app/api/controller/dashboardController';
 import { HttpStatusCode } from 'axios';
 import {toast} from "sonner";

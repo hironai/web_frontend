@@ -25,7 +25,7 @@ import { organizationSchema, passwordSchema } from '@/lib/validations/organizati
 
 
 export default function OrgSettings() {
-    const { userInfo, setUserInfo } = useContext(ApplicationContext) || {};
+    const { userInfo, setUserInfo, setReloadDashboardData } = useContext(ApplicationContext) || {};
     const [notifications, setNotifications] = useState<NotificationSetting[]>(userInfo?.notificationSettings || []);
     const address: AddressType = userInfo?.address?.[0] ?? {};
     const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +77,7 @@ export default function OrgSettings() {
                     ...responseData
                 });
 
-                console.log(userInfo, "new Data");
+                setReloadDashboardData(true)
                 toast.info(isSetPassword ? "Passowrd Updated" : "Dashboard Updated");
             }
             if (status === HttpStatusCode.Unauthorized) {

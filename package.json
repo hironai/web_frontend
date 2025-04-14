@@ -39,6 +39,7 @@
     "framer-motion": "^12.4.1",
     "i": "^0.3.7",
     "input-otp": "^1.4.2",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.475.0",
     "natural": "^8.0.1",
     "next": "^15.3.0",
@@ -61,6 +62,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^19.0.10",

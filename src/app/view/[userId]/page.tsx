@@ -3,111 +3,14 @@
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, Award, Folder, Link as LinkIcon, MapPin, Trophy, Calendar, Building2, Mail, Phone, Globe, Github, Linkedin, Twitter } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { getProfile_API } from "@/app/api/controller/userController";
 import { HttpStatusCode } from "axios";
 import NotFound from "@/app/not-found";
-import { UserData } from "@/types/templates";
-
-// This would come from your API in a real application
-const mockUserData = {
-  name: "Sarah Johnson",
-  email: "sarah.johnson@example.com",
-  role: "Candidate",
-  personalDetails: {
-    phone: "+1 (555) 123-4567",
-    website: "https://sarahjohnson.dev",
-    headline: "Senior Frontend Developer | React Specialist",
-    bio: "Passionate frontend developer with 5+ years of experience building scalable web applications.",
-  },
-  professionalDetails: {
-    currentTitle: "Senior Frontend Developer",
-    currentCompany: "Tech Solutions Inc.",
-    industry: "Software Development",
-    yearsOfExperience: 5,
-    skills: ["React", "TypeScript", "Next.js", "Node.js", "GraphQL", "AWS", "Tailwind CSS", "Redux", "Jest", "CI/CD", "Docker", "Kubernetes"],
-    summary: "Experienced frontend developer specializing in building modern web applications with React and TypeScript.",
-  },
-  experience: [
-    {
-      title: "Senior Frontend Developer",
-      company: "Tech Solutions Inc.",
-      location: "San Francisco, CA",
-      startDate: "2021-01",
-      endDate: "Present",
-      description: "Leading frontend development for enterprise applications with a focus on performance and scalability.",
-      achievements: [
-        "Reduced application load time by 40% through code splitting and optimization",
-        "Implemented new design system used across 10+ products",
-        "Led team of 5 developers in major platform redesign",
-      ],
-    },
-    {
-      title: "Frontend Developer",
-      company: "Digital Innovations",
-      location: "New York, NY",
-      startDate: "2019-03",
-      endDate: "2020-12",
-      description: "Developed responsive web applications using React and TypeScript.",
-      achievements: [
-        "Built real-time dashboard used by 50K+ users",
-        "Improved test coverage from 65% to 95%",
-      ],
-    }
-  ],
-  education: [
-    {
-      degree: "Bachelor of Science",
-      fieldOfStudy: "Computer Science",
-      institution: "University of California",
-      location: "Berkeley, CA",
-      startDate: "2014",
-      endDate: "2018",
-      gpa: "3.8",
-    }
-  ],
-  certifications: [
-    {
-      name: "AWS Certified Developer",
-      issuingOrganization: "Amazon Web Services",
-      issueDate: "2022-06",
-      credentialUrl: "https://aws.amazon.com/certification",
-    },
-    {
-      name: "Professional Cloud Developer",
-      issuingOrganization: "Google Cloud",
-      issueDate: "2021-08",
-      credentialUrl: "https://cloud.google.com/certification",
-    }
-  ],
-  projects: [
-    {
-      name: "E-commerce Platform",
-      description: "Built a full-featured e-commerce platform using Next.js and Stripe, supporting 10K+ daily users",
-      technologies: ["Next.js", "Stripe", "Tailwind CSS", "PostgreSQL"],
-      projectUrl: "https://github.com/example/project",
-    },
-    {
-      name: "Analytics Dashboard",
-      description: "Real-time analytics dashboard with complex data visualizations",
-      technologies: ["React", "D3.js", "WebSocket", "Redis"],
-      projectUrl: "https://github.com/example/analytics",
-    }
-  ],
-  links: [
-    { title: "GitHub", url: "https://github.com/sarah", type: "github" },
-    { title: "LinkedIn", url: "https://linkedin.com/in/sarah", type: "linkedin" },
-    { title: "Twitter", url: "https://twitter.com/sarah", type: "twitter" },
-  ],
-  address: {
-    city: "San Francisco",
-    state: "CA",
-    country: "USA",
-  },
-};
+import { IncompleteProfileDialog } from "@/components/dashboard/dialog/incomplete-profile-dialog";
 
 const SectionHeader = ({ icon: Icon, title }: { icon: any; title: string }) => (
   <div className="flex items-center gap-2 mb-6">
@@ -164,15 +67,15 @@ export default function ProfilePage() {
             if (status === HttpStatusCode.Ok) {
                 setUserProfile(responseData.profile);
                 setLoading(false);
+                
             }
         } catch (error) {
             console.log(error);
         } 
     };
 
-    fetchData();
+    fetchData(); 
 }, []);
-
 
 
 const getInitials = (name: string) => {
@@ -201,7 +104,10 @@ const getInitials = (name: string) => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(userProfile, "profile");
+
+  if(userProfile){
+    return <IncompleteProfileDialog profile={userProfile?.isPorfileCompleted} />
+  }
   
 
   return (

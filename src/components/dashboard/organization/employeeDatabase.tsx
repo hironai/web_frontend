@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +18,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Pagination } from '@/types/dashboard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ApplicationContext } from '@/context/applicationContext';
 
 export default function EmployeeDatabase() {
     // const {employees, setEmployees} = useContext(ApplicationContext) || {};
@@ -31,6 +32,7 @@ export default function EmployeeDatabase() {
     const [selectedStatus, setSelectedStatus] = useState('all');
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+     const { setReloadDashboardData } = useContext(ApplicationContext) || {};
     const route = useRouter();
 
     // ✅ Debounced value (delays API calls until typing stops)
@@ -57,7 +59,7 @@ export default function EmployeeDatabase() {
             if (status === HttpStatusCode.Ok) {
                 setEmployees(responseData.employees);
                 setPagination(responseData.pagination);
-                console.log(responseData.pagination, "page");
+                setReloadDashboardData(true)
                 
             }
             if (status === HttpStatusCode.Unauthorized) {
@@ -101,6 +103,7 @@ export default function EmployeeDatabase() {
             }
             if (status === HttpStatusCode.Ok) {
                 toast.info(responseData.message);
+                setReloadDashboardData(true)
                 fetchData(); // ✅ Fetch fresh data after deletion
             }
             if (status === HttpStatusCode.Unauthorized) {

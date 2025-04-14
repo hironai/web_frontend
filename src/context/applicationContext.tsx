@@ -24,6 +24,9 @@ interface ApplicationState {
 
   forgotNav: any;
   setForgotNav: (value: number) => void;
+
+  reloadDashboardData: boolean;
+  setReloadDashboardData: (value: boolean) => void;
 }
 
 // ✅ Provide a default empty object to avoid `undefined` errors
@@ -51,6 +54,9 @@ export const ApplicationContext = createContext<ApplicationState>({
 
   templates: [],
   setTemplates: () => { },
+
+  reloadDashboardData: true,
+  setReloadDashboardData: () => { },
 });
 
 interface ApplicationContextProps {
@@ -66,6 +72,7 @@ export default function ApplicationContextProvider({ children }: ApplicationCont
   const [email, setEmail] = useState<string>("");
   const [forgotNav, setForgotNav] = useState(0);
   const [templates, setTemplates] = useState<Template[]>([]);
+  const [reloadDashboardData, setReloadDashboardData] = useState<boolean>(true);
 
 
 
@@ -92,7 +99,10 @@ export default function ApplicationContextProvider({ children }: ApplicationCont
     setIsOrganization,
 
     employees,
-    setEmployees
+    setEmployees,
+
+    reloadDashboardData,
+    setReloadDashboardData
   };
 
   return <ApplicationContext.Provider value={states}>{children}</ApplicationContext.Provider>;

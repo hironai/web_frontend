@@ -16,7 +16,6 @@ import { HttpStatusCode } from 'axios';
 import {toast} from "sonner";
 import { useRouter } from 'next/navigation';
 import { updateCandidate_API, updateSettings_API } from '@/app/api/controller/dashboardController';
-import { getLastActiveStatus } from '@/lib/utils';
 import { personalSchema } from '@/lib/validations/candidate';
 
 

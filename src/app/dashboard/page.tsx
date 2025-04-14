@@ -47,6 +47,8 @@ import ResearchPage from "@/components/dashboard/candidate/research";
 import Education from "@/components/dashboard/candidate/education";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ShortlistedEmployees from "@/components/dashboard/organization/shortlistedEmployees";
+import { DashboardLayoutSimmer } from "@/components/simmer/dashboard";
+import { LoadingCard } from "@/components/simmer/dashboard/loading-card";
 
 
 const getInitials = (name: string) => {
@@ -61,7 +63,7 @@ const getInitials = (name: string) => {
 
 
 export default function Dashboard() {
-    const { setUserInfo, isOrganization, activeTab, setActiveTab, setIsOrganization, userInfo } = useContext(ApplicationContext) || {};
+    const { setUserInfo, isOrganization, activeTab, setActiveTab, setIsOrganization, userInfo, reloadDashboardData, setReloadDashboardData } = useContext(ApplicationContext) || {};
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -74,42 +76,49 @@ export default function Dashboard() {
 
     useEffect(() => {
         // if (!isUserInfoEmpty) return;  // ✅ Prevent running if userInfo is already available
-
-        const fetchData = async () => {
-            try {
-                let response = await getDashboard_API();
-
-                const status = response.status ?? 500;
-                const responseData = response.data ?? {};
-
-                if (status !== HttpStatusCode.Ok) {
-                    toast.info(responseData.error);
-                }
-                if (status === HttpStatusCode.Ok) {
-                    // toast.info(responseData.message);
-
-                    // ✅ Set user info in the context
-                    setUserInfo(responseData.dashboard);
-
-                    // ✅ Update `isOrganization` based on user role
-                    setIsOrganization(responseData.dashboard.user.role !== "Candidate");
-                }
-                if (status === HttpStatusCode.Unauthorized) {
-                    route.push("/login");
-                }
-                if (status === HttpStatusCode.Forbidden) {
-                    route.push("/login");
-                }
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+        // if(reloadDashboardData) {
+        //     fetchData();
+        // }
 
         fetchData();
-    }, [isUserInfoEmpty]);  // ✅ Runs only when `userInfo` is empty
+        setTimeout(() => {
+            setReloadDashboardData(false)
+        }, 400)
+    }, [isUserInfoEmpty, reloadDashboardData]);  // ✅ Runs only when `userInfo` is empty
 
+
+    const fetchData = async () => {
+        try {
+            let response = await getDashboard_API();
+
+            const status = response.status ?? 500;
+            const responseData = response.data ?? {};
+
+            if (status !== HttpStatusCode.Ok) {
+                toast.info(responseData.error);
+            }
+            if (status === HttpStatusCode.Ok) {
+                // toast.info(responseData.message);
+
+                // ✅ Set user info in the context
+                setUserInfo(responseData.dashboard);                    
+
+                // ✅ Update `isOrganization` based on user role
+                setIsOrganization(responseData.dashboard.user.role === "Organization" );
+
+            }
+            if (status === HttpStatusCode.Unauthorized) {
+                route.push("/login");
+            }
+            if (status === HttpStatusCode.Forbidden) {
+                route.push("/login");
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     // Define type for Navigation Object
     type Navigation = Record<string, NavigationItem>;
@@ -184,8 +193,29 @@ export default function Dashboard() {
       
 
     return (
-        !userInfo || !userInfo.user?.email ? (
-            <Loader />
+            !userInfo || !userInfo.user?.email ? (
+            <DashboardLayoutSimmer>
+                <div className="space-y-16 p-8">
+        {[1, 2].map((section) => (
+          <motion.section
+            key={section}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: section * 0.2 }}
+            className="space-y-4"
+          >
+            <div className="h-6 w-48 bg-gray-200 rounded-md animate-pulse" />
+            <div className="h-2 w-20 bg-gray-200 rounded-md animate-pulse" />
+            <div className="h-2 w-20 bg-gray-200 rounded-md animate-pulse" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((card) => (
+                <LoadingCard key={card} delay={card * 0.1} />
+              ))}
+            </div>
+          </motion.section>
+        ))}
+      </div>
+      </DashboardLayoutSimmer>
         ) :
         (
             <div className="min-h-screen bg-background">
