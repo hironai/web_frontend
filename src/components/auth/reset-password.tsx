@@ -16,19 +16,8 @@ import { HttpStatusCode } from 'axios';
 import {toast} from "sonner";
 import { ApplicationContext } from '@/context/applicationContext';
 import { usePathname, useRouter } from 'next/navigation';
+import { resetPasswordSchema } from '@/lib/validations/auth';
 
-// Validation schema
-const resetPasswordSchema = z.object({
-  password: z.string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" }),
-  confirmPassword: z.string()
-}).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"]
-});
 
 export default function ResetPasswordPage({setNavigation}:any) {
 const {email,setForgotNav,setEmail} = useContext(ApplicationContext)
@@ -60,19 +49,19 @@ const route = useRouter()
 
       if (status !== HttpStatusCode.Ok) {
           toast.info(responseData.error);
+          route.push("login");
+          
       }
       if (status === HttpStatusCode.Ok) {
           toast.info(responseData.message);
           setEmail(data.email)
           if(pathName === 'login'){
-            route.push('dashboard')
+            route.push("dashboard");
             setNavigation(0)
-
           }
           else{
             route.push('login')
             setForgotNav(0)
-
           }
       }
     

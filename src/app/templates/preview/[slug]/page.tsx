@@ -17,6 +17,7 @@ import ExecutiveSummary from '@/components/templates/executive-summary';
 import { UserData } from '@/types/templates';
 import { getTemplate_API } from '@/app/api/controller/templateController';
 import GetCustomTemplate from '@/components/templates/components/custom-template';
+import { IncompleteProfileDialogTemplate } from '@/components/dashboard/dialog/incomplete-profile-dialog-template';
 
 
 export default function TemplatePreview() {
@@ -41,8 +42,7 @@ export default function TemplatePreview() {
         };
 
         getTemplate();
-    }, [slug]);
-
+    }, [slug, searchParams]);
 
 
 
@@ -67,9 +67,11 @@ export default function TemplatePreview() {
             alert('Link copied to clipboard!');
         }
     };
-
+    
 
     if (loading || !userData) return <div className="p-8 text-lg h-full w-full flex items-center justify-center">Loading template...</div>;
+
+    if(searchParams.get("profile") && !userData?.isPorfileCompleted) return <IncompleteProfileDialogTemplate profile={userData?.isPorfileCompleted} />
 
     return (
         <div className="min-h-screen bg-background">
@@ -99,10 +101,10 @@ export default function TemplatePreview() {
                                         <Share2 className="mr-2 h-4 w-4" />
                                         Share
                                     </Button>
-                                    <Button>
+                                    {/* <Button>
                                         <Download className="mr-2 h-4 w-4" />
                                         Download PDF
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             )
                         }

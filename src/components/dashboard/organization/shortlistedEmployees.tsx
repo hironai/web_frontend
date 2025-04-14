@@ -18,7 +18,7 @@ import { DeleteActionDialogContent } from '@/components/layout/dialog-content';
 
 
 export default function ShortlistedEmployees() {
-    const {activeTab,setActiveTab} = useContext(ApplicationContext)
+    const {setReloadDashboardData,setActiveTab,} = useContext(ApplicationContext)
     const [isOpen, setIsOpen] = useState<any>(null);
     const [searchResults, setSearchResults] = useState({ search: "", submit: "" });
     const route = useRouter();
@@ -39,6 +39,7 @@ export default function ShortlistedEmployees() {
 
             if (status === HttpStatusCode.Ok) {
                 // ✅ Update `searchResults` state
+                setReloadDashboardData(true)
                 setSavedCandidate(responseData?.candidates)
             }
             if (status === HttpStatusCode.Unauthorized) {
@@ -61,6 +62,7 @@ export default function ShortlistedEmployees() {
                 toast.info(responseData.error);
             }
             if (status === HttpStatusCode.Ok) {
+                setReloadDashboardData(true)
                 toast.info(responseData.message);
                 // ✅ Update `searchResults` state
                 setIsOpen(null)

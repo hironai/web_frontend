@@ -8,33 +8,16 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { useToast } from "@/hooks/use-toast";
 import { feedbackSchema } from "@/lib/validations/feedback";
-import { ScrollArea } from "../ui/scroll-area";
-import { ApplicationContext } from "@/context/applicationContext";
-import { useContext, useEffect, useState } from "react";
 import { postFeedback_API } from "@/app/api/controller/feedbackController";
 import { HttpStatusCode } from "axios";
 import { toast } from "sonner";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
 
-
-export function GlobalFeedbackDialog() {
-  const [open, setOpen] = useState(false);
-  const { userInfo, setUserInfo } = useContext(ApplicationContext);
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-  
-    if (userInfo?.askFeedback === true) {
-      timeoutId = setTimeout(() => {
-        setOpen(true);
-      }, 9000); // wait for 5 seconds
-    }
-  
-    return () => clearTimeout(timeoutId);
-  }, [userInfo]);
-  
+export default function FeedbackPage() {
 
   const form = useForm<z.infer<typeof feedbackSchema>>({
     resolver: zodResolver(feedbackSchema),
@@ -51,11 +34,10 @@ export function GlobalFeedbackDialog() {
 
       if (status !== HttpStatusCode.Ok) {
         toast.info(responseData.error);
+      
       }
       if (status === HttpStatusCode.Ok) {
         toast.info(responseData.message);
-        setOpen(false)
-        setUserInfo({...userInfo,askFeedback:false})
       }
 
     }
@@ -66,14 +48,14 @@ export function GlobalFeedbackDialog() {
   }
 
   return (
-    <Dialog open={open}>
-      <DialogContent className="sm:max-w-[500px] h-[90vh] flex flex-col p-0" hidden={true}>
-        <DialogHeader className="p-6 pb-0">
-          <DialogTitle className="font-medium tracking-tight text-primary">Product Feedback</DialogTitle>
-          <DialogDescription>
+    <div className="h-screen overflow-hidden bg-gradient-to-b from-primary/10 to-white w-full grid-background md:py-16">
+     <Card className="sm:max-w-[500px] flex flex-col p-0 mx-auto h-full overflow-auto">
+        <div className="p-6 pb-0">
+          <p className="font-medium tracking-tight text-primary">Product Feedback</p>
+          <p>
             Help us improve our product by sharing your experience. Your feedback is valuable to us.
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </div>
 
         <ScrollArea className="flex-1">
           <Form {...form}>
@@ -234,7 +216,7 @@ export function GlobalFeedbackDialog() {
             Submit Feedback
           </Button>
         </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      </Card>
+    </div>
   );
 }

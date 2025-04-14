@@ -60,21 +60,18 @@ export default function VerifyOTPPage({ setNavigation }: any) {
 
   const handleVerify = async () => {
     const otpString = otp.join('');
+    console.log("in");
     if (otpString.length !== 6) return;
-    console.log('called verify')
+  
     setIsVerifying(true);
     try {
-      let response = await verifyOTP_API({
-        email,
-        "otp": parseInt(otpString),
-        type: pathName
-      })
-      console.log(response)
+      let response = await verifyOTP_API({ email, "otp": parseInt(otpString), type: pathName })
+      
       const status = response.status ?? 500;
       const responseData = response.data ?? {};
 
       if (status !== HttpStatusCode.Ok) {
-        toast.info(responseData.errors[0].message);
+        toast.info(responseData.error ? responseData.error : responseData.errors[0].message);
         setIsVerifying(false);
       }
       if (status === HttpStatusCode.Ok) {

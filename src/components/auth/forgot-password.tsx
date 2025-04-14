@@ -16,11 +16,9 @@ import { HttpStatusCode } from 'axios';
 import {toast} from "sonner";
 import { ApplicationContext } from '@/context/applicationContext';
 import { useRouter } from 'next/navigation';
+import { forgotPasswordSchema } from '@/lib/validations/auth';
 
-// Validation schema
-const forgotPasswordSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-});
+
 
 export default function ForgotPasswordPage() {
   const {setEmail,setForgotNav} = useContext(ApplicationContext)

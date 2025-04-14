@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,9 +18,11 @@ import { HttpStatusCode } from 'axios';
 import {toast} from "sonner";
 import { useRouter } from 'next/navigation';
 import { employeeSchema } from '@/lib/validations/organization';
+import { ApplicationContext } from '@/context/applicationContext';
 
 export default function UploadEmployees() {
     const route = useRouter();
+    const { userInfo, setUserInfo, setReloadDashboardData } = useContext(ApplicationContext) || {};
     const [activeTab, setActiveTab] = useState('single');
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'validating' | 'success' | 'error'>('idle');
@@ -42,7 +44,6 @@ export default function UploadEmployees() {
         }
     });
     const handleSingleEmployeeSubmit = async (data: z.infer<typeof employeeSchema>) => {
-        console.log("Employee data submitted:", data);
 
         // Handle employee submission
             try {
@@ -55,6 +56,23 @@ export default function UploadEmployees() {
                 }
                 if (status === HttpStatusCode.Ok) {
                     toast.info(`${responseData.onboardedResult.totalProcessed} employee(s) added.`);
+                    setReloadDashboardData(true);
+
+                    let updatedStats = userInfo?.stats.map(stat =>
+                        stat.name === "Total Employees"
+                            ? {
+                                ...stat,
+                                value: responseData.onboardedResult.totalProcessed,
+                                change: responseData.onboardedResult.totalProcessed
+                            }
+                            : stat
+                    );
+                    // set to dashboard 
+                    setUserInfo({
+                        ...userInfo,
+                        stats: updatedStats || userInfo.stats,
+                        activity: responseData.userActivity || userInfo.activity
+                    });
                 }
                 if (status === HttpStatusCode.Unauthorized) {
                     route.push("/login");
@@ -183,6 +201,7 @@ export default function UploadEmployees() {
             }
             if (status === HttpStatusCode.Ok) {
                 toast.info(responseData.message);
+                setReloadDashboardData(true);
             }
             if (status === HttpStatusCode.Unauthorized) {
                 route.push("/login");

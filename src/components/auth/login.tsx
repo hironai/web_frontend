@@ -16,12 +16,7 @@ import { HttpStatusCode } from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 import { ApplicationContext } from '@/context/applicationContext';
-
-// Validation schema
-const loginSchema = z.object({
-    email: z.string().email({ message: "Please enter a valid email address" }),
-    password: z.string().min(1, { message: "Password is required" }),
-});
+import { signInSchema } from '@/lib/validations/auth';
 
 export default function LoginComponent({ setNavigation }: any) {
     // export default function LoginComponent({setNavigation}) {
@@ -30,15 +25,15 @@ export default function LoginComponent({ setNavigation }: any) {
     // const { toast } = usetoast.info();
     const [isLoading, setIsLoading] = useState(false);
 
-    const form = useForm<z.infer<typeof loginSchema>>({
-        resolver: zodResolver(loginSchema),
+    const form = useForm<z.infer<typeof signInSchema>>({
+        resolver: zodResolver(signInSchema),
         defaultValues: {
             email: "",
             password: "",
         }
     });
 
-    const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    const onSubmit = async (data: z.infer<typeof signInSchema>) => {
         setIsLoading(true);
 
         try {

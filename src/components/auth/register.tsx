@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -18,38 +18,29 @@ import { signup_API } from '@/app/api/controller/userController';
 import { toast } from "sonner";
 import { HttpStatusCode } from 'axios';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
+import { adminEmails } from '@/lib/constants';
+import { candidateSchema, organizationSchema } from '@/lib/validations/auth';
 
-
-// Validation schemas
-const candidateSchema = z.object({
-    name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-    email: z.string().email({ message: "Please enter a valid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-    confirmPassword: z.string()
-}).refine(data => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"]
-});
-
-const organizationSchema = z.object({
-    organizationName: z.string().min(2, { message: "Organization name must be at least 2 characters" }),
-    contactName: z.string().min(2, { message: "Contact name must be at least 2 characters" }),
-    email: z.string().email({ message: "Please enter a valid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-    confirmPassword: z.string(),
-    organizationType: z.enum(["Company", "University", "Government"], {
-        required_error: "Please select an organization type",
-    })
-}).refine(data => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"]
-});
 
 export default function RegisterComponent() {
     const searchParams = useSearchParams();
     const defaultTab = searchParams.get('type') === 'organization' ? 'organization' : 'candidate';
     const [activeTab, setActiveTab] = useState(defaultTab);
     const route = useRouter()
+    const [referBy, setReferBy] = useState<string | undefined>(undefined);
+
+
+    useEffect(() => {
+        const referFromURL = searchParams.get('refer');
+        if (referFromURL) {
+            Cookies.set('referBy', referFromURL, { expires: 7 });
+            setReferBy(referFromURL);
+        } else {
+            const cookieRef = Cookies.get('referBy');
+            if (cookieRef) setReferBy(cookieRef);
+        }
+    }, [searchParams]);
 
     // Candidate form
     const candidateForm = useForm<z.infer<typeof candidateSchema>>({
@@ -76,74 +67,57 @@ export default function RegisterComponent() {
     });
 
     const onCandidateSubmit = async (data: z.infer<typeof candidateSchema>) => {
-        console.log("Candidate form submitted:", data);
-        // Handle candidate registration
-        await signupCandidate(data)
+        const isAdmin = adminEmails.includes(data.email.trim().toLowerCase());
+
+        const body = {
+            ...data,
+            role: isAdmin ? "Admin" : "Candidate",
+            ...(referBy && { referBy })
+        };
+
+        await handleSignup(body);
 
     };
 
     const onOrganizationSubmit = async (data: z.infer<typeof organizationSchema>) => {
-        console.log("Organization form submitted:", data);
-        // Handle organization registration
-        await signupOrganization(data)
+        const { organizationName, contactName } = data;
 
-    };
-    const signupOrganization = async (data: any) => {
-        console.log(data, 'insideSigup')
-        const { organizationName, contactName } = data
-        let body = {
+        const body = {
             ...data,
             name: organizationName,
             contactPerson: contactName,
-            "role": "Organization",
-        }
+            role: "Organization",
+            ...(referBy && { referBy })
+        };
+        await handleSignup(body);
+
+    };
+
+    const handleSignup = async (body: any) => {
         try {
-            let response = await signup_API(body)
-            console.log(response, 'response org')
+            const response = await signup_API(body);
+
             const status = response.status ?? 500;
             const responseData = response.data ?? {};
 
             if (status !== HttpStatusCode.Ok && status !== HttpStatusCode.Created) {
                 toast.info(responseData.error);
             }
+
             if (status === HttpStatusCode.Ok || status === HttpStatusCode.Created) {
                 toast.info(responseData.message);
-                route.push('login')
+                Cookies.remove('referBy');
+                route.push('login');
             }
-            if (status === HttpStatusCode.Unauthorized) {
-            }
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
 
-    const signupCandidate = async (data: any) => {
-        console.log(data, 'insideSigup')
-        let body = {
-            ...data,
-            "role": "Candidate",
-        }
-        try {
-            let response = await signup_API(body)
-            console.log(response, 'response org')
-            const status = response.status ?? 500;
-            const responseData = response.data ?? {};
-
-            if (status !== HttpStatusCode.Ok && status !== HttpStatusCode.Created) {
-                toast.info(responseData.error);
-            }
-            if (status === HttpStatusCode.Ok || status === HttpStatusCode.Created) {
-                toast.info(responseData.message);
-                route.push('login')
-            }
             if (status === HttpStatusCode.Unauthorized) {
+                // Optional: handle unauthorized if needed
             }
+        } catch (error) {
+            console.log(error);
         }
-        catch (error) {
-            console.log(error)
-        }
-    }
+    };
+
     return (
         <main className="flex-grow py-12 md:py-20">
             <div className="container px-4 md:px-6 mx-auto max-w-7xl">
@@ -166,10 +140,10 @@ export default function RegisterComponent() {
                     </motion.p>
                 </div> */}
                 <Link href="/" className="flex justify-center items-center gap-3 mb-6 w-fit mx-auto">
-                            {/* <Clock className="h-12 w-12 text-primary" /> */}
-                            <Image src="/assets/images/logo/logo.svg" alt="Hiron AI" width={50} height={50} />
-                            <span className='text-3xl md:text-4xl font-medium tracking-tight'>Join Hiron AI</span>
-                        </Link>
+                    {/* <Clock className="h-12 w-12 text-primary" /> */}
+                    <Image src="/assets/images/logo/logo.svg" alt="Hiron AI" width={50} height={50} />
+                    <span className='text-3xl md:text-4xl font-medium tracking-tight'>Join Hiron AI</span>
+                </Link>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

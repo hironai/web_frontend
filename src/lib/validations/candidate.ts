@@ -95,7 +95,7 @@ export const professionalSchema = z.object({
     currentCompany: z.string().min(2, { message: "Company name must be at least 2 characters" }).optional(),
     industry: z.string().min(2, { message: "Industry must be at least 2 characters" }),
     yearsOfExperience: z.number()
-        .min(1, { message: "Years of experience must be at least 1" })
+        .min(0, { message: "Years of experience must be selected" })
         .max(50, { message: "Years of experience is too high" }),
     skills: z.array(z.string()).min(1, { message: "At least one skill is required" }),
     summary: z.string().min(50, { message: "Professional summary must be at least 50 characters" }).max(1000, { message: "Professional summary must be at most 1000 characters" }),
