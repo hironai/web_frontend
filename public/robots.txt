@@ -2,7 +2,7 @@
 User-agent: *
 
 # Allow all pages except the restricted sections
-Allow: /
+Disallow: /
 
 # Disallow specific sections you don't want indexed
 Disallow: /api/
@@ -17,6 +17,10 @@ Allow: /*.png$
 Allow: /*.jpg$
 Allow: /*.jpeg$
 Allow: /*.gif$
+
+# Disallow crawling of internal subdomain
+Disallow: https://internal.hireon.com/
+Disallow: https://api.hireon.com/
 
 # Specify the Sitemap URL to help crawlers find all indexed pages
 Sitemap: https://hironai.com/sitemap.xml
