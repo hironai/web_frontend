@@ -2,7 +2,7 @@
 User-agent: *
 
 # Allow all pages except the restricted sections
-Disallow: /
+Allow: /
 
 # Disallow specific sections you don't want indexed
 Disallow: /api/
